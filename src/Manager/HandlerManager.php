@@ -23,7 +23,7 @@ use TBoileau\FormHandlerBundle\Handler\HandlerInterface;
  * @package TBoileau\FormHandlerBundle\Manager
  * @author Thomas Boileau <t-boileau@email.com>
  */
-class HandlerManager implements HandlerManagerInterface
+final class HandlerManager implements HandlerManagerInterface
 {
     /**
      * @var HandlerInterface
