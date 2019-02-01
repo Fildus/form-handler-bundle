@@ -13,7 +13,8 @@ use Symfony\Component\Form\Exception\AlreadySubmittedException;
 use TBoileau\FormHandlerBundle\Exception\ClassNotFoundException;
 
 /**
- * Class HandlerConfigBuilder
+ * Class HandlerConfig
+ * A configurator to set form type and form options
  * @package TBoileau\FormHandlerBundle\Config
  * @author Thomas Boileau <t-boileau@email.com>
  */

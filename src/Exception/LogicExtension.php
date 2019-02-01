@@ -10,7 +10,8 @@
 namespace TBoileau\FormHandlerBundle\Exception;
 
 /**
- * Class LogicExtension Base LogicException for Handler component
+ * Class LogicExtension
+ * Base LogicException for Handler component
  * @package TBoileau\FormHandlerBundle\Exception
  * @author Thomas Boileau <t-boileau@email.com>
  */
