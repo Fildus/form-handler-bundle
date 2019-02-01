@@ -10,6 +10,7 @@
 namespace TBoileau\FormHandlerBundle\Handler;
 
 use TBoileau\FormHandlerBundle\Config\HandlerConfigInterface;
+use TBoileau\FormHandlerBundle\Manager\HandlerManagerInterface;
 
 /**
  * Interface HandlerInterface
@@ -20,8 +21,10 @@ interface HandlerInterface
 {
     /**
      * Add your logic when the form is submitted and valid.
+     *
+     * @param HandlerManagerInterface $manager
      */
-    public function process(): void;
+    public function process(HandlerManagerInterface $manager): void;
 
     /**
      * Configure your handler
