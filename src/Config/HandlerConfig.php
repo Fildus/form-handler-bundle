@@ -65,7 +65,7 @@ class HandlerConfig implements HandlerConfigInterface
     /**
      * {@inheritdoc}
      */
-    public function getFormType(): string
+    public function getFormType(): ?string
     {
         return $this->formType;
     }

@@ -42,9 +42,9 @@ interface HandlerConfigInterface
     /**
      * Retrieve form type class name
      *
-     * @return string
+     * @return string|null
      */
-    public function getFormType(): string;
+    public function getFormType(): ?string;
 
 
     /**
