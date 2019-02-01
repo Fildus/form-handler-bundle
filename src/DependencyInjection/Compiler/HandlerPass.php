@@ -28,7 +28,7 @@ class HandlerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition("t_boileau.form_handler.manager_factory");
 
-        $definition->addArgument($this->processHandler($container));
+        $definition->replaceArgument(2, $this->processHandler($container));
     }
 
     /**
