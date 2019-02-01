@@ -9,6 +9,9 @@
 
 namespace TBoileau\FormHandlerBundle\Config;
 
+use TBoileau\FormHandlerBundle\Exception\ClassNotFoundException;
+use TBoileau\FormHandlerBundle\Exception\ExistingOptionException;
+
 /**
  * Interface HandlerConfigBuilderInterface
  * @package TBoileau\FormHandlerBundle\Config
@@ -19,6 +22,7 @@ interface HandlerConfigInterface
     /**
      * Set form type class name you want to handle
      *
+     * @throws ClassNotFoundException
      * @param string|null $formTypeClass
      * @return HandlerConfigInterface
      */
@@ -28,9 +32,25 @@ interface HandlerConfigInterface
     /**
      * Add a new form option
      *
+     * @throws ExistingOptionException
      * @param string $key
      * @param mixed $value
      * @return HandlerConfigInterface
      */
     public function with(string $key, $value): self;
+
+    /**
+     * Retrieve form type class name
+     *
+     * @return string
+     */
+    public function getFormType(): string;
+
+
+    /**
+     * Retrieve form options
+     *
+     * @return array
+     */
+    public function getOptions(): array;
 }

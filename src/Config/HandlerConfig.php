@@ -9,8 +9,8 @@
 
 namespace TBoileau\FormHandlerBundle\Config;
 
-use Symfony\Component\Form\Exception\AlreadySubmittedException;
 use TBoileau\FormHandlerBundle\Exception\ClassNotFoundException;
+use TBoileau\FormHandlerBundle\Exception\ExistingOptionException;
 
 /**
  * Class HandlerConfig
@@ -25,7 +25,7 @@ class HandlerConfig implements HandlerConfigInterface
      *
      * @var string|null
      */
-    private $formTypeClass;
+    private $formType;
 
     /**
      * Form type options
@@ -37,13 +37,13 @@ class HandlerConfig implements HandlerConfigInterface
     /**
      * {@inheritdoc}
      */
-    public function use(string $formTypeClass): HandlerConfigInterface
+    public function use(string $formType): HandlerConfigInterface
     {
-        if (!class_exists($formTypeClass)) {
+        if (!class_exists($formType)) {
             throw new ClassNotFoundException('You need to pass an existing class');
         }
 
-        $this->formTypeClass = $formTypeClass;
+        $this->formType = $formType;
 
         return $this;
     }
@@ -54,11 +54,27 @@ class HandlerConfig implements HandlerConfigInterface
     public function with(string $key, $value): HandlerConfigInterface
     {
         if (isset($this->options[$key])) {
-            throw new AlreadySubmittedException('You cannot add an option that already exists');
+            throw new ExistingOptionException('You cannot add an option that already exists');
         }
 
         $this->options[$key] = $value;
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFormType(): string
+    {
+        return $this->formType;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 }
