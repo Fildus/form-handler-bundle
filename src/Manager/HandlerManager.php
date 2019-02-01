@@ -84,6 +84,10 @@ final class HandlerManager implements HandlerManagerInterface
      */
     public function createForm(): void
     {
+        if ($this->config->getFormType() === null) {
+            throw new FormNotCreatedException('Form type not found');
+        }
+
         $this->form = $this->formFactory->create(
             $this->config->getFormType(),
             $this->data,

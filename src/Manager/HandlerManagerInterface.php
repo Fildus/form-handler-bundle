@@ -26,6 +26,8 @@ interface HandlerManagerInterface
 {
     /**
      * Create form
+     *
+     * @throws FormNotCreatedException
      */
     public function createForm(): void;
 
