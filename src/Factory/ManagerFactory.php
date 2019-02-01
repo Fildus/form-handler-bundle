@@ -40,14 +40,14 @@ class ManagerFactory implements ManagerFactoryInterface
     /**
      * ManagerFactory constructor.
      * @param FormFactoryInterface $formFactory
-     * @param ServiceLocator $serviceLocator
      * @param HandlerConfigInterface $handlerConfig
+     * @param ServiceLocator $serviceLocator
      */
-    public function __construct(FormFactoryInterface $formFactory, ServiceLocator $serviceLocator, HandlerConfigInterface $handlerConfig)
+    public function __construct(FormFactoryInterface $formFactory, HandlerConfigInterface $handlerConfig, ServiceLocator $serviceLocator)
     {
         $this->formFactory = $formFactory;
-        $this->serviceLocator = $serviceLocator;
         $this->handlerConfig = $handlerConfig;
+        $this->serviceLocator = $serviceLocator;
     }
 
     /**
