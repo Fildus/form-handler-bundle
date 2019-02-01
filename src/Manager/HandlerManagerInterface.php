@@ -7,19 +7,20 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle\Manager;
+namespace TBoileau\Bundle\FormHandlerBundle\Manager;
 
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
-use TBoileau\FormHandlerBundle\Config\HandlerConfigInterface;
-use TBoileau\FormHandlerBundle\Exception\FormNotCreatedException;
-use TBoileau\FormHandlerBundle\Handler\HandlerInterface;
+use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
+use TBoileau\Bundle\FormHandlerBundle\Exception\FormNotCreatedException;
+use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
 
 /**
  * Interface HandlerManager
- * @package TBoileau\FormHandlerBundle\Manager
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\Manager
  * @author Thomas Boileau <t-boileau@email.com>
  */
 interface HandlerManagerInterface
@@ -30,6 +31,11 @@ interface HandlerManagerInterface
      * @throws FormNotCreatedException
      */
     public function createForm(): void;
+
+    /**
+     * @param HandlerInterface $handler
+     */
+    public function setHandler(HandlerInterface $handler): void;
 
     /**
      * Add new handler error
@@ -60,4 +66,18 @@ interface HandlerManagerInterface
      * @return HandlerManagerInterface
      */
     public function handle(Request $request): self;
+
+    /**
+     * Set form data
+     *
+     * @param $data
+     */
+    public function setData($data): void;
+
+    /**
+     * Retrieve form data
+     *
+     * @return mixed
+     */
+    public function getData();
 }

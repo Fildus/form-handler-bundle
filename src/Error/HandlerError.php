@@ -7,12 +7,14 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle\Error;
+namespace TBoileau\Bundle\FormHandlerBundle\Error;
 
 /**
  * Class HandlerError
+ *
  * Wraps error in handler
- * @package TBoileau\FormHandlerBundle\Error
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\Error
  * @author Thomas Boileau <t-boileau@email.com>
  */
 class HandlerError implements \Serializable
@@ -42,7 +44,7 @@ class HandlerError implements \Serializable
     }
 
     /**
-     * @internal
+     * @inheritdoc
      */
     public function serialize()
     {
@@ -52,7 +54,7 @@ class HandlerError implements \Serializable
     }
 
     /**
-     * @internal
+     * @inheritdoc
      */
     public function unserialize($serialized)
     {

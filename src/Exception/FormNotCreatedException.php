@@ -7,12 +7,14 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle\Exception;
+namespace TBoileau\Bundle\FormHandlerBundle\Exception;
 
 /**
  * Class FormNotCreatedException
+ *
  * Thrown when a class is not found
- * @package TBoileau\FormHandlerBundle\Exception
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\Exception
  * @author Thomas Boileau <t-boileau@email.com>
  */
 class FormNotCreatedException extends LogicExtension

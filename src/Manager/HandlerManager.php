@@ -7,76 +7,83 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle\Manager;
+namespace TBoileau\Bundle\FormHandlerBundle\Manager;
 
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
-use TBoileau\FormHandlerBundle\Config\HandlerConfigInterface;
-use TBoileau\FormHandlerBundle\Error\HandlerError;
-use TBoileau\FormHandlerBundle\Exception\FormNotCreatedException;
-use TBoileau\FormHandlerBundle\Handler\HandlerInterface;
+use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
+use TBoileau\Bundle\FormHandlerBundle\Error\HandlerError;
+use TBoileau\Bundle\FormHandlerBundle\Exception\FormNotCreatedException;
+use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
 
 /**
  * Class HandlerManager
- * @package TBoileau\FormHandlerBundle\Manager
+ *
+ * Manage an handler. First, we create the form with the form factory service,
+ * then we handle it with the request, and finally test his validity before process the handler
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\Manager
  * @author Thomas Boileau <t-boileau@email.com>
  */
-final class HandlerManager implements HandlerManagerInterface
+class HandlerManager implements HandlerManagerInterface
 {
     /**
      * @var HandlerInterface
      */
-    private $handler;
+    protected $handler;
 
     /**
      * @var FormInterface
      */
-    private $form;
+    protected $form;
 
     /**
      * @var FormFactoryInterface
      */
-    private $formFactory;
+    protected $formFactory;
 
     /**
      * @var HandlerConfigInterface
      */
-    private $config;
+    protected $config;
 
     /**
      * @var mixed|null
      */
-    private $data;
+    protected $data;
 
     /**
      * @var bool
      */
-    private $valid = false;
+    protected $valid = false;
 
     /**
      * @var HandlerError[]
      */
-    private $errors = [];
+    protected $errors = [];
 
     /**
      * HandlerManager constructor.
-     * @param HandlerInterface $handler
+     *
      * @param FormFactoryInterface $formFactory
      * @param HandlerConfigInterface $config
-     * @param null $data
      */
     public function __construct(
-        HandlerInterface $handler,
         FormFactoryInterface $formFactory,
-        HandlerConfigInterface $config,
-        $data = null
+        HandlerConfigInterface $config
     ) {
-        $this->handler = $handler;
         $this->formFactory = $formFactory;
         $this->config = $config;
-        $this->data = $data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setHandler(HandlerInterface $handler): void
+    {
+        $this->handler = $handler;
     }
 
     /**
@@ -142,5 +149,21 @@ final class HandlerManager implements HandlerManagerInterface
         }
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setData($data): void
+    {
+        $this->data = $data;
     }
 }

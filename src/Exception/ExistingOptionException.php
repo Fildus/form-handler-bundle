@@ -7,12 +7,14 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle\Exception;
+namespace TBoileau\Bundle\FormHandlerBundle\Exception;
 
 /**
  * Class ExistingOptionException
+ *
  * Thrown when an form option already exists.
- * @package TBoileau\FormHandlerBundle\Exception
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\Exception
  * @author Thomas Boileau <t-boileau@email.com>
  */
 class ExistingOptionException extends LogicExtension

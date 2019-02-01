@@ -7,15 +7,17 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle\Config;
+namespace TBoileau\Bundle\FormHandlerBundle\Config;
 
-use TBoileau\FormHandlerBundle\Exception\ClassNotFoundException;
-use TBoileau\FormHandlerBundle\Exception\ExistingOptionException;
+use TBoileau\Bundle\FormHandlerBundle\Exception\ClassNotFoundException;
+use TBoileau\Bundle\FormHandlerBundle\Exception\ExistingOptionException;
 
 /**
  * Class HandlerConfig
+ *
  * A configurator to set form type and form options
- * @package TBoileau\FormHandlerBundle\Config
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\Config
  * @author Thomas Boileau <t-boileau@email.com>
  */
 class HandlerConfig implements HandlerConfigInterface

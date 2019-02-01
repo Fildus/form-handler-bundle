@@ -7,16 +7,18 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle\DependencyInjection\Compiler;
+namespace TBoileau\Bundle\FormHandlerBundle\DependencyInjection\Compiler;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface;
 
 /**
  * Class HandlerPass
- * @package TBoileau\FormHandlerBundle\DependencyInjection\Compiler
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\DependencyInjection\Compiler
  * @author Thomas Boileau <t-boileau@email.com>
  */
 class HandlerPass implements CompilerPassInterface
@@ -28,7 +30,8 @@ class HandlerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition("t_boileau.form_handler.manager_factory");
 
-        $definition->replaceArgument(2, $this->processHandler($container));
+        $definition->addMethodCall('setServiceLocator', [$this->processHandler($container)]);
+
     }
 
     /**

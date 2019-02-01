@@ -7,12 +7,14 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle\Exception;
+namespace TBoileau\Bundle\FormHandlerBundle\Exception;
 
 /**
  * Class LogicExtension
+ *
  * Base LogicException for Handler component
- * @package TBoileau\FormHandlerBundle\Exception
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\Exception
  * @author Thomas Boileau <t-boileau@email.com>
  */
 class LogicExtension extends \LogicException implements \Throwable

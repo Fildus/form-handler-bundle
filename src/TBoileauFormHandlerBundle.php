@@ -7,21 +7,22 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle;
+namespace TBoileau\Bundle\FormHandlerBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use TBoileau\FormHandlerBundle\DependencyInjection\Compiler\HandlerPass;
+use TBoileau\Bundle\FormHandlerBundle\DependencyInjection\Compiler\HandlerPass;
 
 /**
  * Class TBoileauFormHandlerBundle
- * @package TBoileau\FormHandlerBundle
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle
  * @author Thomas Boileau <t-boileau@email.com>
  */
 class TBoileauFormHandlerBundle extends Bundle
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function build(ContainerBuilder $container)
     {

@@ -1,13 +1,15 @@
 services:
     t_boileau.form_handler.manager_factory:
-        class: TBoileau\FormHandlerBundle\Factory\ManagerFactory
-        arguments:
-            - '@form.factory'
-            - '@TBoileau\FormHandlerBundle\Config\HandlerConfig'
-            -
+        class: TBoileau\Bundle\FormHandlerBundle\Factory\ManagerFactory
+        autowire: true
 
-    TBoileau\FormHandlerBundle\Factory\ManagerFactoryInterface: '@t_boileau.form_handler.manager_factory'
+    TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManager:
+        autowire: true
 
-    TBoileau\FormHandlerBundle\Config\HandlerConfig: ~
+    TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface: '@TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManager'
 
-    TBoileau\FormHandlerBundle\Config\HandlerConfigInterface: '@TBoileau\FormHandlerBundle\Config\HandlerConfig'
+    TBoileau\Bundle\FormHandlerBundle\Factory\ManagerFactoryInterface: '@t_boileau.form_handler.manager_factory'
+
+    TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfig: ~
+
+    TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface: '@TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfig'

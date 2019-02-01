@@ -7,13 +7,15 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle\Factory;
+namespace TBoileau\Bundle\FormHandlerBundle\Factory;
 
-use TBoileau\FormHandlerBundle\Manager\HandlerManagerInterface;
+use Symfony\Component\DependencyInjection\ServiceLocator;
+use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface;
 
 /**
  * Interface ManagerFactoryInterface
- * @package TBoileau\FormHandlerBundle\Factory
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\Factory
  * @author Thomas Boileau <t-boileau@email.com>
  */
 interface ManagerFactoryInterface
@@ -27,4 +29,11 @@ interface ManagerFactoryInterface
      * @return HandlerManagerInterface
      */
     public function create(string $handler, $data = null, array $options = []): HandlerManagerInterface;
+
+    /**
+     * Set service locator to retrieve the handler service
+     *
+     * @param ServiceLocator $serviceLocator
+     */
+    public function setServiceLocator(ServiceLocator $serviceLocator): void;
 }

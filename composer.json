@@ -24,12 +24,12 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "TBoileau\\FormHandlerBundle\\": "src/"
+            "TBoileau\\Bundle\\FormHandlerBundle\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "TBoileau\\FormHandlerBundle\\Tests\\": "tests/"
+            "TBoileau\\Bundle\\FormHandlerBundle\\Tests\\": "tests/"
         }
     }
 }

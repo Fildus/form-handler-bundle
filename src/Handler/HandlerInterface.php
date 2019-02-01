@@ -7,14 +7,15 @@
  * with this source code in the file LICENSE.
  */
 
-namespace TBoileau\FormHandlerBundle\Handler;
+namespace TBoileau\Bundle\FormHandlerBundle\Handler;
 
-use TBoileau\FormHandlerBundle\Config\HandlerConfigInterface;
-use TBoileau\FormHandlerBundle\Manager\HandlerManagerInterface;
+use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
+use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface;
 
 /**
  * Interface HandlerInterface
- * @package TBoileau\FormHandlerBundle\Handler
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\Handler
  * @author Thomas Boileau <t-boileau@email.com>
  */
 interface HandlerInterface
