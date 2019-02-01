@@ -10,12 +10,12 @@
 namespace TBoileau\FormHandlerBundle\Exception;
 
 /**
- * Class FormTypeNotFoundException
+ * Class FormNotCreatedException
  * Thrown when a class is not found
  * @package TBoileau\FormHandlerBundle\Exception
  * @author Thomas Boileau <t-boileau@email.com>
  */
-class ClassNotFoundException extends LogicExtension
+class FormNotCreatedException extends LogicExtension
 {
 
 }
