@@ -10,7 +10,7 @@
 namespace TBoileau\FormHandlerBundle\Exception;
 
 /**
- * Class FormTypeNotFoundException
+ * Class ClassNotFoundException
  * Thrown when a class is not found
  * @package TBoileau\FormHandlerBundle\Exception
  * @author Thomas Boileau <t-boileau@email.com>
