@@ -1,0 +1,5 @@
+services:
+    t_boileau.form_handler.manager_factory:
+        class: TBoileau\FormHandlerBundle\Factory\ManagerFactory
+
+    TBoileau\FormHandlerBundle\Factory\ManagerFactoryInterface: '@t_boileau.form_handler.manager_factory'

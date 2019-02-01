@@ -13,7 +13,6 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use TBoileau\FormHandlerBundle\Factory\ManagerFactoryInterface;
 
 /**
  * Class HandlerPass
@@ -27,7 +26,7 @@ class HandlerPass implements CompilerPassInterface
      */
     public function process(ContainerBuilder $container)
     {
-        $definition = $container->getDefinition(ManagerFactoryInterface::class);
+        $definition = $container->getDefinition("t_boileau.form_handler.manager_factory");
 
         $definition->addArgument($this->processHandler($container));
     }
