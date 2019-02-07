@@ -13,13 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Form\FormFactoryInterface;
 use TBoileau\Bundle\FormHandlerBundle\DependencyInjection\Compiler\HandlerPass;
 use TBoileau\Bundle\FormHandlerBundle\DependencyInjection\TBoileauFormHandlerExtension;
-use TBoileau\Bundle\FormHandlerBundle\Factory\ManagerFactoryInterface;
 use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
-use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface;
 use TBoileau\Bundle\FormHandlerBundle\Tests\Handler\FooHandler;
 
 /**
