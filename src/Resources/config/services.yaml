@@ -6,10 +6,10 @@ services:
     TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManager:
         autowire: true
 
+    TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfig: ~
+
     TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface: '@TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManager'
 
     TBoileau\Bundle\FormHandlerBundle\Factory\ManagerFactoryInterface: '@t_boileau.form_handler.manager_factory'
-
-    TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfig: ~
 
     TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface: '@TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfig'

@@ -35,7 +35,7 @@ class HandlerManager implements HandlerManagerInterface
     protected $handler;
 
     /**
-     * @var FormInterface
+     * @var FormInterface|null
      */
     protected $form;
 
@@ -135,7 +135,7 @@ class HandlerManager implements HandlerManagerInterface
     /**
      * {@inheritdoc}
      */
-    public function handle(Request $request): HandlerManagerInterface
+    public function handle(?Request $request): HandlerManagerInterface
     {
         $this->handler->configure($this->config);
 
@@ -166,4 +166,22 @@ class HandlerManager implements HandlerManagerInterface
     {
         $this->data = $data;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getErrors(): array
+    {
+        return $this->errors;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getForm(): ?FormInterface
+    {
+        return $this->form;
+    }
+
+
 }

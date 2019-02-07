@@ -18,6 +18,7 @@ use TBoileau\Bundle\FormHandlerBundle\DependencyInjection\Compiler\HandlerPass;
  *
  * @package TBoileau\Bundle\FormHandlerBundle
  * @author Thomas Boileau <t-boileau@email.com>
+ * @codeCoverageIgnore
  */
 class TBoileauFormHandlerBundle extends Bundle
 {
