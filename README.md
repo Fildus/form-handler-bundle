@@ -1,6 +1,10 @@
 The Symfony FormHandlerBundle
 =============================
 
+[![Build Status](https://travis-ci.org/TBoileau/form-handler-bundle.svg?branch=master)](https://travis-ci.org/TBoileau/form-handler-bundle)
+
+[![SymfonyInsight](https://insight.symfony.com/projects/6fe933a5-3c2d-4688-863d-14f61556359d/big.svg)](https://insight.symfony.com/projects/6fe933a5-3c2d-4688-863d-14f61556359d)
+
 The FormHandlerBundle is (IMO) a good way to handling your forms, in compliance with SOLID principles, in particular the **S**ingle responsability principle.
 
 In the official documentation, you are told that your forms must be handled in a controller, like this :

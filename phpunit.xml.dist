@@ -3,7 +3,7 @@
 <phpunit colors="true" bootstrap="vendor/autoload.php">
     <testsuites>
         <testsuite name="TBoileauFormHandlerBundle for the Symfony Framework">
-            <directory>./Tests</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 
@@ -13,10 +13,11 @@
 
     <filter>
         <whitelist>
-            <directory>.</directory>
+            <directory>./src</directory>
             <exclude>
-                <directory>./Resources</directory>
-                <directory>./Tests</directory>
+                <directory>./src/Resources</directory>
+                <directory>./tests</directory>
+                <directory>./docs</directory>
                 <directory>./vendor</directory>
             </exclude>
         </whitelist>
