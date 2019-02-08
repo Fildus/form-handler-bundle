@@ -11,8 +11,6 @@ namespace TBoileau\Bundle\FormHandlerBundle\Tests\Factory;
 
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Symfony\Component\DependencyInjection\ServiceLocator;
-use Symfony\Component\Form\FormFactoryInterface;
-use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
 use TBoileau\Bundle\FormHandlerBundle\Factory\ManagerFactory;
 use TBoileau\Bundle\FormHandlerBundle\Factory\ManagerFactoryInterface;
 use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
@@ -36,10 +34,6 @@ class ManagerFactoryTest extends TestCase
      */
     protected function setUp()
     {
-        $formFactory = $this->createMock(FormFactoryInterface::class);
-
-        $config = $this->createMock(HandlerConfigInterface::class);
-
         $handlerManager = $this->createMock(HandlerManagerInterface::class);
 
         $handler = $this->createMock(HandlerInterface::class);
@@ -47,11 +41,7 @@ class ManagerFactoryTest extends TestCase
         $serviceLocator = $this->createMock(ServiceLocator::class);
         $serviceLocator->method("get")->willReturn($handler);
 
-        $this->managerFactory = new ManagerFactory(
-            $formFactory,
-            $config,
-            $handlerManager
-        );
+        $this->managerFactory = new ManagerFactory($handlerManager);
 
         $this->managerFactory->setServiceLocator($serviceLocator);
     }
