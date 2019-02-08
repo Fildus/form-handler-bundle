@@ -10,8 +10,6 @@
 namespace TBoileau\Bundle\FormHandlerBundle\Factory;
 
 use Symfony\Component\DependencyInjection\ServiceLocator;
-use Symfony\Component\Form\FormFactoryInterface;
-use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
 use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface;
 
 /**
@@ -25,19 +23,9 @@ use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface;
 class ManagerFactory implements ManagerFactoryInterface
 {
     /**
-     * @var FormFactoryInterface
-     */
-    private $formFactory;
-
-    /**
      * @var ServiceLocator
      */
     private $serviceLocator;
-
-    /**
-     * @var HandlerConfigInterface
-     */
-    private $handlerConfig;
 
     /**
      * @var HandlerManagerInterface
@@ -46,17 +34,11 @@ class ManagerFactory implements ManagerFactoryInterface
 
     /**
      * ManagerFactory constructor.
-     * @param FormFactoryInterface $formFactory
-     * @param HandlerConfigInterface $handlerConfig
+     *
      * @param HandlerManagerInterface $handlerManager
      */
-    public function __construct(
-        FormFactoryInterface $formFactory,
-        HandlerConfigInterface $handlerConfig,
-        HandlerManagerInterface $handlerManager
-    ) {
-        $this->formFactory = $formFactory;
-        $this->handlerConfig = $handlerConfig;
+    public function __construct(HandlerManagerInterface $handlerManager)
+    {
         $this->handlerManager = $handlerManager;
     }
 

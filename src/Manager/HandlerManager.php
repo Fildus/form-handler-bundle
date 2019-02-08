@@ -182,6 +182,4 @@ class HandlerManager implements HandlerManagerInterface
     {
         return $this->form;
     }
-
-
 }
