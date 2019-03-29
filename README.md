@@ -245,3 +245,210 @@ class DefaultController extends AbstractController
     }
 }
 ```
+
+Add a data mapper for your DTO
+------------------------------
+
+In some cases, we do not want to use an entity in a form, but rather prefer to use a DTO (Data Transfert Object). This bundle helps you to manage this issue more simply.
+
+First, we implement our entity :
+```php
+<?php
+// src/Controller/DefaultController.php
+
+namespace App\Entity;
+
+class Foo
+{
+    /**
+     * @var string
+     */
+    private $bar = "";
+
+    /**
+     * @return string
+     */
+    public function getBar(): string
+    {
+        return $this->bar;
+    }
+
+    /**
+     * @param string $bar
+     */
+    public function setBar(string $bar): void
+    {
+        $this->bar = $bar;
+    }
+}
+```
+
+Then, the DTO :
+```php
+<?php
+// src/Controller/DefaultController.php
+
+namespace App\Model;
+
+class Bar
+{
+    /**
+     * @var string
+     */
+    private $name = "";
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+}
+```
+
+Let's now go to the form :
+```php
+<?php
+
+namespace App\Form;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use App\Model\Bar;
+
+/**
+ * Class FooType
+ *
+ * @package TBoileau\Bundle\FormHandlerBundle\Tests\Form
+ * @author Thomas Boileau <t-boileau@email.com>
+ */
+class FooType extends AbstractType
+{
+    /**
+     * @inheritdoc
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add("name");
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefault("data_class", Bar::class);
+    }
+}
+```
+
+Finally, all that remains is to create our `DataMapper` and configure our `Handler` :
+```php
+<?php
+
+namespace App\DataMapper;
+
+use TBoileau\Bundle\FormHandlerBundle\DataMapper\DataMapperInterface;
+use TBoileau\Bundle\FormHandlerBundle\Exception\MappingFailedException;
+use TBoileau\Bundle\FormHandlerBundle\Tests\Model\Bar;
+use TBoileau\Bundle\FormHandlerBundle\Tests\Model\Foo;
+
+class FooMapper implements DataMapperInterface
+{
+    /**
+     * @param Foo $data
+     * @return Bar
+     */
+    public function map($data)
+    {
+        $bar = new Bar();
+        $bar->setName($data->getBar());
+
+        return $bar;
+    }
+
+    /**
+     * @param Bar $modelData
+     * @param Foo $handleData
+     * @return Foo
+     */
+    public function reverseMap($modelData, $handleData)
+    {
+        if ($modelData->getName() === "fail") {
+            throw new MappingFailedException("Bar can't be equal to 'fail'.");
+        }
+
+        $handleData->setBar($modelData->getName());
+
+        return $handleData;
+    }
+}
+```
+
+*Note: Don't forget to return the data in `reverseMap` method.*
+
+```php
+<?php
+
+namespace App\Handler;
+
+use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
+use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
+use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface;
+use App\DataMapper\FooMapper;
+use App\Form\FooType;
+
+class FooHandler implements HandlerInterface
+{
+    /**
+     * @inheritdoc
+     */
+    public function process(HandlerManagerInterface $manager): void
+    {
+
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function configure(HandlerConfigInterface $config): void
+    {
+        $config
+            ->use(FooType::class)
+            ->mappedBy(FooMapper::class)
+        ;
+    }
+}
+
+```
+
+**You need to tag your `FooMapper`**
+
+First, you need to define your data mapper in `services.yaml` with this tag `t_boileau.data_mapper` :
+```yaml
+services:
+    # ...
+    App\DataMapper\FooMapper:
+        tags:
+            - { name: t_boileau.data_mapper }
+```
+
+In case you have multiple data mappers, you can define in one time all your data mappers :
+```yaml
+services:
+    # ...
+    App\DataMapper\:
+        resource: '../src/DataMapper'
+        tags:
+            - { name: t_boileau.data_mapper }
+```

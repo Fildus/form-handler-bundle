@@ -10,6 +10,7 @@
 namespace TBoileau\Bundle\FormHandlerBundle\Tests\DataMapper;
 
 use TBoileau\Bundle\FormHandlerBundle\DataMapper\DataMapperInterface;
+use TBoileau\Bundle\FormHandlerBundle\Exception\MappingFailedException;
 use TBoileau\Bundle\FormHandlerBundle\Tests\Model\Bar;
 use TBoileau\Bundle\FormHandlerBundle\Tests\Model\Foo;
 
@@ -36,9 +37,16 @@ class FooMapper implements DataMapperInterface
     /**
      * @param Bar $modelData
      * @param Foo $handleData
+     * @return Foo
      */
-    public function reverseMap($modelData, $handleData): void
+    public function reverseMap($modelData, $handleData)
     {
+        if ($modelData->getName() === "fail") {
+            throw new MappingFailedException("Bar can't be equal to 'fail'.");
+        }
+
         $handleData->setBar($modelData->getName());
+
+        return $handleData;
     }
 }

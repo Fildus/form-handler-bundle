@@ -80,9 +80,32 @@ class HandlerManagerTest extends TypeTestCase
 
         $this->manager->addError("error");
 
+        $this->manager->createForm();
+
         $this->assertFalse($this->manager->isValid());
 
         $this->assertEquals($errorsToCompare, $this->manager->getErrors());
+    }
+
+    public function testFailedHandle()
+    {
+        $formData = [
+            "name" => "fail"
+        ];
+
+        $fooToCompare = new Foo();
+
+        $this->manager->setData($fooToCompare);
+
+        $this->assertEquals($fooToCompare, $this->manager->getData());
+
+        $request = Request::create('/', Request::METHOD_POST, [
+            'foo' => $formData
+        ]);
+
+        $this->assertEquals($this->manager, $this->manager->handle($request));
+
+        $this->assertFalse($this->manager->isValid());
     }
 
     public function testSuccessfulHandle()

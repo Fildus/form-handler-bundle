@@ -30,6 +30,7 @@ interface DataMapperInterface
      *
      * @param mixed $modelData
      * @param mixed|null $handleData
+     * @return mixed
      */
-    public function reverseMap($modelData, &$handleData): void;
+    public function reverseMap($modelData, $handleData);
 }

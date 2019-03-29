@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
 use TBoileau\Bundle\FormHandlerBundle\Error\HandlerError;
 use TBoileau\Bundle\FormHandlerBundle\Exception\FormNotCreatedException;
+use TBoileau\Bundle\FormHandlerBundle\Exception\MappingFailedException;
 use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
 
 /**
@@ -62,7 +63,7 @@ class HandlerManager implements HandlerManagerInterface
     /**
      * @var bool
      */
-    protected $valid = false;
+    protected $valid = true;
 
     /**
      * @var HandlerError[]
@@ -134,7 +135,7 @@ class HandlerManager implements HandlerManagerInterface
      */
     public function isValid(): bool
     {
-        return $this->valid;
+        return $this->form->isSubmitted() && $this->form->isValid() && $this->valid;
     }
 
     /**
@@ -154,11 +155,15 @@ class HandlerManager implements HandlerManagerInterface
 
         $this->form->handleRequest($request);
 
-        if ($this->form->isSubmitted() && $this->form->isValid()) {
-            if ($this->config->getDataMapper()) {
-                 $this->config->getDataMapper()->reverseMap($this->modelData, $this->handleData);
+        if ($this->config->getDataMapper()) {
+            try {
+                $this->handleData = $this->config->getDataMapper()->reverseMap($this->modelData, $this->handleData);
+            } catch (MappingFailedException $exception) {
+                $this->addError($exception->getMessage());
             }
-            $this->valid = true;
+        }
+
+        if ($this->isValid()) {
             $this->handler->process($this);
         }
 
