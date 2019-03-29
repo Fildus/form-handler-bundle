@@ -15,7 +15,6 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\Test\TypeTestCase;
 use Symfony\Component\HttpFoundation\Request;
 use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
-use TBoileau\Bundle\FormHandlerBundle\Error\HandlerError;
 use TBoileau\Bundle\FormHandlerBundle\Exception\FormNotCreatedException;
 use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
 use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManager;
@@ -76,15 +75,13 @@ class HandlerManagerTest extends TypeTestCase
 
     public function testSuccessfulAddError()
     {
-        $errorsToCompare = [new HandlerError("error")];
+        $this->manager->createForm();
 
         $this->manager->addError("error");
 
-        $this->manager->createForm();
-
         $this->assertFalse($this->manager->isValid());
 
-        $this->assertEquals($errorsToCompare, $this->manager->getErrors());
+        $this->assertCount(1, $this->manager->getForm()->getErrors());
     }
 
     public function testFailedHandle()

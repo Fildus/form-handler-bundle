@@ -9,12 +9,12 @@
 
 namespace TBoileau\Bundle\FormHandlerBundle\Manager;
 
+use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\Request;
 use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
-use TBoileau\Bundle\FormHandlerBundle\Error\HandlerError;
 use TBoileau\Bundle\FormHandlerBundle\Exception\FormNotCreatedException;
 use TBoileau\Bundle\FormHandlerBundle\Exception\MappingFailedException;
 use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
@@ -64,11 +64,6 @@ class HandlerManager implements HandlerManagerInterface
      * @var bool
      */
     protected $valid = true;
-
-    /**
-     * @var HandlerError[]
-     */
-    protected $errors = [];
 
     /**
      * HandlerManager constructor.
@@ -125,9 +120,7 @@ class HandlerManager implements HandlerManagerInterface
      */
     public function addError(string $message): void
     {
-        $this->errors[] = new HandlerError($message);
-
-        $this->valid = false;
+        $this->form->addError(new FormError($message));
     }
 
     /**
@@ -135,7 +128,7 @@ class HandlerManager implements HandlerManagerInterface
      */
     public function isValid(): bool
     {
-        return $this->form->isSubmitted() && $this->form->isValid() && $this->valid;
+        return $this->form->isSubmitted() && $this->form->isValid();
     }
 
     /**
@@ -184,14 +177,6 @@ class HandlerManager implements HandlerManagerInterface
     public function setData($data): void
     {
         $this->handleData = $data;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
     }
 
     /**

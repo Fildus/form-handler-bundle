@@ -81,13 +81,6 @@ interface HandlerManagerInterface
     public function getData();
 
     /**
-     * Retrieve handler errors
-     *
-     * @return HandlerError[]
-     */
-    public function getErrors(): array;
-
-    /**
      * Retrieve form
      *
      * @return FormInterface|null
