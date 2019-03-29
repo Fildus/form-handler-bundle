@@ -13,6 +13,6 @@ services:
         arguments:
             -
 
-    TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface: '@TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManager'
+    TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface: '@t_boileau.form_handler.config'
 
-    TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface: '@TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfig'
+    TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface: '@TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManager'
