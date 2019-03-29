@@ -33,7 +33,7 @@ class FormHandlerPass implements CompilerPassInterface
 
         $definition = $container->getDefinition("t_boileau.form_handler.config");
 
-        $definition->replaceArgument(0, [$this->processConfig($container)]);
+        $definition->replaceArgument(0, $this->processConfig($container));
     }
 
     /**
