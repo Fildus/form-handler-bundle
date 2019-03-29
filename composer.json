@@ -1,6 +1,7 @@
 {
     "name": "tboileau/form-handler-bundle",
     "description": "Symfony Form Handler helps you handle forms, in accordance with SOLID principles.",
+    "version": "1.2",
     "keywords": ["form", "handler", "form handler", "handling forms"],
     "type": "symfony-bundle",
     "require": {

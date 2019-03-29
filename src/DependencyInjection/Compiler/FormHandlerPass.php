@@ -15,12 +15,12 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Class HandlerPass
+ * Class FormHandlerPass
  *
  * @package TBoileau\Bundle\FormHandlerBundle\DependencyInjection\Compiler
  * @author Thomas Boileau <t-boileau@email.com>
  */
-class HandlerPass implements CompilerPassInterface
+class FormHandlerPass implements CompilerPassInterface
 {
     /**
      * {@inheritdoc}
@@ -29,20 +29,45 @@ class HandlerPass implements CompilerPassInterface
     {
         $definition = $container->getDefinition("t_boileau.form_handler.manager_factory");
 
-        $definition->addMethodCall('setServiceLocator', [$this->processHandler($container)]);
+        $definition->addMethodCall('setServiceLocator', [$this->processManager($container)]);
 
+        $definition = $container->getDefinition("t_boileau.form_handler.config");
+
+        $definition->replaceArgument(0, [$this->processConfig($container)]);
     }
 
     /**
      * @param ContainerBuilder $container
      * @return Reference
      */
-    private function processHandler(ContainerBuilder $container): Reference
+    private function processManager(ContainerBuilder $container): Reference
     {
         /** @var Reference[] $servicesMap */
         $servicesMap =  [];
 
         $taggedServices = $container->findTaggedServiceIds("t_boileau.form_handler", true);
+
+        /**
+         * @var string $serviceId
+         * @var array $taggedServiceId
+         */
+        foreach ($taggedServices as $serviceId => $taggedServiceId) {
+            $servicesMap[$container->getDefinition($serviceId)->getClass()] = new Reference($serviceId);
+        }
+
+        return ServiceLocatorTagPass::register($container, $servicesMap);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @return Reference
+     */
+    private function processConfig(ContainerBuilder $container): Reference
+    {
+        /** @var Reference[] $servicesMap */
+        $servicesMap =  [];
+
+        $taggedServices = $container->findTaggedServiceIds("t_boileau.data_mapper", true);
 
         /**
          * @var string $serviceId

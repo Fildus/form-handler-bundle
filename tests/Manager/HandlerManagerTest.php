@@ -20,6 +20,7 @@ use TBoileau\Bundle\FormHandlerBundle\Exception\FormNotCreatedException;
 use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
 use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManager;
 use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface;
+use TBoileau\Bundle\FormHandlerBundle\Tests\DataMapper\FooMapper;
 use TBoileau\Bundle\FormHandlerBundle\Tests\Model\Foo;
 use TBoileau\Bundle\FormHandlerBundle\Tests\Form\FooType;
 
@@ -43,8 +44,11 @@ class HandlerManagerTest extends TypeTestCase
     {
         parent::setUp();
 
+        $dataMapper = new FooMapper();
+
         $config = $this->createMock(HandlerConfigInterface::class);
         $config->method("getFormType")->willReturn(FooType::class);
+        $config->method("getDataMapper")->willReturn($dataMapper);
 
         $handler = $this->createMock(HandlerInterface::class);
 
@@ -84,7 +88,7 @@ class HandlerManagerTest extends TypeTestCase
     public function testSuccessfulHandle()
     {
         $formData = [
-            "bar" => "value"
+            "name" => "value"
         ];
 
         $fooToCompare = new Foo();

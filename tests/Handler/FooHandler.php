@@ -12,6 +12,7 @@ namespace TBoileau\Bundle\FormHandlerBundle\Tests\Handler;
 use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
 use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
 use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface;
+use TBoileau\Bundle\FormHandlerBundle\Tests\DataMapper\FooMapper;
 use TBoileau\Bundle\FormHandlerBundle\Tests\Form\FooType;
 
 /**
@@ -36,5 +37,6 @@ class FooHandler implements HandlerInterface
     public function configure(HandlerConfigInterface $config): void
     {
         $config->use(FooType::class);
+        $config->mappedBy(FooMapper::class);
     }
 }

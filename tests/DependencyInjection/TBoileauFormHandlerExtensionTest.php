@@ -84,7 +84,7 @@ class TBoileauFormHandlerExtensionTest extends TestCase
         ];
 
         yield [
-            HandlerConfig::class,
+            "t_boileau.form_handler.config",
             HandlerConfigInterface::class
         ];
     }

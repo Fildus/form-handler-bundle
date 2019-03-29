@@ -13,9 +13,12 @@ use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use TBoileau\Bundle\FormHandlerBundle\DataMapper\DataMapperInterface;
+use TBoileau\Bundle\FormHandlerBundle\DependencyInjection\Compiler\FormHandlerPass;
 use TBoileau\Bundle\FormHandlerBundle\DependencyInjection\Compiler\HandlerPass;
 use TBoileau\Bundle\FormHandlerBundle\DependencyInjection\TBoileauFormHandlerExtension;
 use TBoileau\Bundle\FormHandlerBundle\Handler\HandlerInterface;
+use TBoileau\Bundle\FormHandlerBundle\Tests\DataMapper\FooMapper;
 use TBoileau\Bundle\FormHandlerBundle\Tests\Handler\FooHandler;
 
 /**
@@ -24,7 +27,7 @@ use TBoileau\Bundle\FormHandlerBundle\Tests\Handler\FooHandler;
  * @package TBoileau\Bundle\FormHandlerBundle\Tests\DependencyInjection\Compiler
  * @author Thomas Boileau <t-boileau@email.com>
  */
-class HandlerPassTest extends TestCase
+class FormHandlerPassTest extends TestCase
 {
     /**
      * @var ContainerBuilder|null
@@ -34,14 +37,14 @@ class HandlerPassTest extends TestCase
     /**
      * @var HandlerPass|null
      */
-    private $handlerPass;
+    private $formHandlerPass;
 
     /**
      * @inheritdoc
      */
     protected function setUp()
     {
-        $this->handlerPass = new HandlerPass();
+        $this->formHandlerPass = new FormHandlerPass();
 
         $this->container = new ContainerBuilder(new ParameterBag());
 
@@ -52,7 +55,12 @@ class HandlerPassTest extends TestCase
 
         $this->container->setDefinition(FooHandler::class, $handlerDefinition);
 
-        $this->handlerPass->process($this->container);
+        $mapperDefinition = new Definition(FooMapper::class);
+        $mapperDefinition->setTags(["t_boileau.data_mapper" => []]);
+
+        $this->container->setDefinition(FooMapper::class, $mapperDefinition);
+
+        $this->formHandlerPass->process($this->container);
     }
 
     /**
@@ -60,12 +68,13 @@ class HandlerPassTest extends TestCase
      */
     protected function tearDown()
     {
-        $this->handlerPass = null;
+        $this->formHandlerPass = null;
         $this->container = null;
     }
 
     public function testSuccessfulProcess()
     {
         $this->assertInstanceOf(HandlerInterface::class, $this->container->get(FooHandler::class));
+        $this->assertInstanceOf(DataMapperInterface::class, $this->container->get(FooMapper::class));
     }
 }

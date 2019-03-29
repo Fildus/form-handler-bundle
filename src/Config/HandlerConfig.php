@@ -9,6 +9,8 @@
 
 namespace TBoileau\Bundle\FormHandlerBundle\Config;
 
+use Symfony\Component\DependencyInjection\ServiceLocator;
+use TBoileau\Bundle\FormHandlerBundle\DataMapper\DataMapperInterface;
 use TBoileau\Bundle\FormHandlerBundle\Exception\ClassNotFoundException;
 use TBoileau\Bundle\FormHandlerBundle\Exception\ExistingOptionException;
 
@@ -30,6 +32,13 @@ class HandlerConfig implements HandlerConfigInterface
     private $formType;
 
     /**
+     * Model class
+     *
+     * @var DataMapperInterface|null
+     */
+    private $dataMapper;
+
+    /**
      * Form type options
      *
      * @var mixed[]
@@ -37,15 +46,52 @@ class HandlerConfig implements HandlerConfigInterface
     private $options = [];
 
     /**
+     * @var ServiceLocator
+     */
+    private $serviceLocator;
+
+    /**
+     * HandlerConfig constructor.
+     *
+     * @param ServiceLocator $serviceLocator
+     */
+    public function __construct(ServiceLocator $serviceLocator)
+    {
+        $this->serviceLocator = $serviceLocator;
+    }
+
+    /**
      * {@inheritdoc}
      */
-    public function use(string $formType): HandlerConfigInterface
+    public function mappedBy(string $dataMapperClass): HandlerConfigInterface
     {
-        if (!class_exists($formType)) {
+        if (!class_exists($dataMapperClass)) {
             throw new ClassNotFoundException('You need to pass an existing class');
         }
 
-        $this->formType = $formType;
+        $this->dataMapper = $this->serviceLocator->get($dataMapperClass);
+
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDataMapper(): ?DataMapperInterface
+    {
+        return $this->dataMapper;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function use(string $formTypeClass): HandlerConfigInterface
+    {
+        if (!class_exists($formTypeClass)) {
+            throw new ClassNotFoundException('You need to pass an existing class');
+        }
+
+        $this->formType = $formTypeClass;
 
         return $this;
     }

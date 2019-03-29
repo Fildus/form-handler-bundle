@@ -12,7 +12,7 @@ namespace TBoileau\Bundle\FormHandlerBundle\Tests\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use TBoileau\Bundle\FormHandlerBundle\Tests\Model\Foo;
+use TBoileau\Bundle\FormHandlerBundle\Tests\Model\Bar;
 
 /**
  * Class FooType
@@ -27,7 +27,7 @@ class FooType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add("bar");
+        $builder->add("name");
     }
 
     /**
@@ -35,7 +35,7 @@ class FooType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefault("data_class", Foo::class);
+        $resolver->setDefault("data_class", Bar::class);
     }
 }
 

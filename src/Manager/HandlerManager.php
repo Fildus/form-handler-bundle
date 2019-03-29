@@ -52,7 +52,12 @@ class HandlerManager implements HandlerManagerInterface
     /**
      * @var mixed|null
      */
-    protected $data;
+    protected $handleData;
+
+    /**
+     * @var mixed|null
+     */
+    protected $modelData;
 
     /**
      * @var bool
@@ -97,7 +102,7 @@ class HandlerManager implements HandlerManagerInterface
 
         $this->form = $this->formFactory->create(
             $this->config->getFormType(),
-            $this->data,
+            $this->modelData,
             $this->config->getOptions()
         );
     }
@@ -139,11 +144,20 @@ class HandlerManager implements HandlerManagerInterface
     {
         $this->handler->configure($this->config);
 
+        $this->modelData = $this->handleData;
+
+        if ($this->config->getDataMapper() !== null) {
+            $this->modelData = $this->config->getDataMapper()->map($this->handleData);
+        }
+
         $this->createForm();
 
         $this->form->handleRequest($request);
 
         if ($this->form->isSubmitted() && $this->form->isValid()) {
+            if ($this->config->getDataMapper()) {
+                 $this->config->getDataMapper()->reverseMap($this->modelData, $this->handleData);
+            }
             $this->valid = true;
             $this->handler->process($this);
         }
@@ -156,7 +170,7 @@ class HandlerManager implements HandlerManagerInterface
      */
     public function getData()
     {
-        return $this->data;
+        return $this->handleData;
     }
 
     /**
@@ -164,7 +178,7 @@ class HandlerManager implements HandlerManagerInterface
      */
     public function setData($data): void
     {
-        $this->data = $data;
+        $this->handleData = $data;
     }
 
     /**

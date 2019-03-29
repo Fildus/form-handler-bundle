@@ -9,8 +9,7 @@
 
 namespace TBoileau\Bundle\FormHandlerBundle\Config;
 
-use TBoileau\Bundle\FormHandlerBundle\Exception\ClassNotFoundException;
-use TBoileau\Bundle\FormHandlerBundle\Exception\ExistingOptionException;
+use TBoileau\Bundle\FormHandlerBundle\DataMapper\DataMapperInterface;
 
 /**
  * Interface HandlerConfigBuilderInterface
@@ -21,19 +20,24 @@ use TBoileau\Bundle\FormHandlerBundle\Exception\ExistingOptionException;
 interface HandlerConfigInterface
 {
     /**
+     * Set data mapper class you want to transform handle data to model data
+     *
+     * @param string $dataMapperClass
+     * @return HandlerConfigInterface
+     */
+    public function mappedBy(string $dataMapperClass): self;
+
+    /**
      * Set form type class name you want to handle
      *
-     * @throws ClassNotFoundException
-     * @param string|null $formTypeClass
+     * @param string $formTypeClass
      * @return HandlerConfigInterface
      */
     public function use(string $formTypeClass): self;
 
-
     /**
      * Add a new form option
      *
-     * @throws ExistingOptionException
      * @param string $key
      * @param mixed $value
      * @return HandlerConfigInterface
@@ -47,6 +51,12 @@ interface HandlerConfigInterface
      */
     public function getFormType(): ?string;
 
+    /**
+     * Retrieve data mapper service
+     *
+     * @return DataMapperInterface|null
+     */
+    public function getDataMapper(): ?DataMapperInterface;
 
     /**
      * Retrieve form options

@@ -10,11 +10,14 @@
 namespace TBoileau\Bundle\FormHandlerBundle\Tests\Config;
 
 use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfig;
 use TBoileau\Bundle\FormHandlerBundle\Config\HandlerConfigInterface;
+use TBoileau\Bundle\FormHandlerBundle\DataMapper\DataMapperInterface;
 use TBoileau\Bundle\FormHandlerBundle\Exception\ClassNotFoundException;
 use TBoileau\Bundle\FormHandlerBundle\Exception\ExistingOptionException;
+use TBoileau\Bundle\FormHandlerBundle\Tests\DataMapper\FooMapper;
 
 /**
  * Class HandlerConfigTest
@@ -34,9 +37,21 @@ class HandlerConfigTest extends TestCase
      */
     protected function setUp()
     {
-        $this->config = new HandlerConfig();
+        $serviceLocator = $this->createMock(ServiceLocator::class);
+        $serviceLocator->method("get")->willReturnCallback([$this, "getService"]);
+
+        $this->config = new HandlerConfig($serviceLocator);
 
         $this->config->with('existing_key', 'value');
+    }
+
+    /**
+     * @param string $dataMapperClass
+     * @return DataMapperInterface
+     */
+    public function getService(string $dataMapperClass): DataMapperInterface
+    {
+        return new FooMapper();
     }
 
     /**
@@ -82,5 +97,18 @@ class HandlerConfigTest extends TestCase
     {
         $this->expectException(ClassNotFoundException::class);
         $this->config->use("fail");
+    }
+
+    public function testSuccessfulMappedBy()
+    {
+        $this->assertEquals($this->config, $this->config->mappedBy(FooMapper::class));
+
+        $this->assertInstanceOf(FooMapper::class, $this->config->getDataMapper());
+    }
+
+    public function testFailedMappedBy()
+    {
+        $this->expectException(ClassNotFoundException::class);
+        $this->config->mappedBy("fail");
     }
 }
