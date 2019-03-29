@@ -11,7 +11,7 @@ namespace TBoileau\Bundle\FormHandlerBundle;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use TBoileau\Bundle\FormHandlerBundle\DependencyInjection\Compiler\HandlerPass;
+use TBoileau\Bundle\FormHandlerBundle\DependencyInjection\Compiler\FormHandlerPass;
 
 /**
  * Class TBoileauFormHandlerBundle
@@ -27,6 +27,6 @@ class TBoileauFormHandlerBundle extends Bundle
      */
     public function build(ContainerBuilder $container)
     {
-        $container->addCompilerPass(new HandlerPass());
+        $container->addCompilerPass(new FormHandlerPass());
     }
 }
