@@ -148,8 +148,7 @@ class HandlerManager implements HandlerManagerInterface
 
         $this->form->handleRequest($request);
 
-
-        if ($this->form->isSubmitted() && $this->config->getDataMapper()) {
+        if ($this->isValid() && $this->config->getDataMapper()) {
             try {
                 $this->handleData = $this->config->getDataMapper()->reverseMap($this->modelData, $this->handleData);
             } catch (MappingFailedException $exception) {
