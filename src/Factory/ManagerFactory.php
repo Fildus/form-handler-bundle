@@ -28,21 +28,6 @@ class ManagerFactory implements ManagerFactoryInterface
     private $serviceLocator;
 
     /**
-     * @var HandlerManagerInterface
-     */
-    private $handlerManager;
-
-    /**
-     * ManagerFactory constructor.
-     *
-     * @param HandlerManagerInterface $handlerManager
-     */
-    public function __construct(HandlerManagerInterface $handlerManager)
-    {
-        $this->handlerManager = $handlerManager;
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function setServiceLocator(ServiceLocator $serviceLocator): void
@@ -55,9 +40,10 @@ class ManagerFactory implements ManagerFactoryInterface
      */
     public function create(string $handler, $data = null, array $options = []): HandlerManagerInterface
     {
-        $this->handlerManager->setHandler($this->serviceLocator->get($handler));
-        $this->handlerManager->setData($data);
+        $handlerManager = $this->serviceLocator->get(HandlerManagerInterface::class);
+        $handlerManager->setHandler($this->serviceLocator->get($handler));
+        $handlerManager->setData($data);
 
-        return $this->handlerManager;
+        return $handlerManager;
     }
 }

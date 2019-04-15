@@ -34,14 +34,12 @@ class ManagerFactoryTest extends TestCase
      */
     protected function setUp()
     {
-        $handlerManager = $this->createMock(HandlerManagerInterface::class);
-
         $handler = $this->createMock(HandlerInterface::class);
 
         $serviceLocator = $this->createMock(ServiceLocator::class);
         $serviceLocator->method("get")->willReturn($handler);
 
-        $this->managerFactory = new ManagerFactory($handlerManager);
+        $this->managerFactory = new ManagerFactory();
 
         $this->managerFactory->setServiceLocator($serviceLocator);
     }

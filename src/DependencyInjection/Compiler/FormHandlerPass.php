@@ -13,6 +13,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Compiler\ServiceLocatorTagPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
+use TBoileau\Bundle\FormHandlerBundle\Manager\HandlerManagerInterface;
 
 /**
  * Class FormHandlerPass
@@ -54,6 +55,8 @@ class FormHandlerPass implements CompilerPassInterface
         foreach ($taggedServices as $serviceId => $taggedServiceId) {
             $servicesMap[$container->getDefinition($serviceId)->getClass()] = new Reference($serviceId);
         }
+
+        $servicesMap[HandlerManagerInterface::class] = new Reference(HandlerManagerInterface::class);
 
         return ServiceLocatorTagPass::register($container, $servicesMap);
     }
